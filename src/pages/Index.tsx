@@ -5,6 +5,7 @@ import UserHeader from '@/components/UserHeader';
 import DataTable from '@/components/DataTable';
 import ProgressChart from '@/components/ProgressChart';
 import { SummaryItem, SummaryRow } from '@/components/SummaryCard';
+import Notes from '@/components/Notes';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 
 // Mock data
@@ -67,12 +68,19 @@ const Dashboard = () => {
           </div>
         ) : (
           <div className="card-gradient rounded-xl p-6 shadow-lg border border-white/10 animate-fade-in">
-            {/* User Header */}
-            <UserHeader 
-              userName="Mike Davis" 
-              studentName="Emily Johnson" 
-              studentImage={studentImage} 
-            />
+            {/* User Header with Notes button */}
+            <div className="flex justify-between items-start">
+              <div className="flex-1">
+                <UserHeader 
+                  userName="Mike Davis" 
+                  studentName="Emily Johnson" 
+                  studentImage={studentImage} 
+                />
+              </div>
+              <div className="flex items-center space-x-2 py-2">
+                <Notes />
+              </div>
+            </div>
             
             {/* Main Tabs */}
             <TabMenu 

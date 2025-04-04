@@ -56,5 +56,6 @@
 }
 
 .delay-500 {
-  animation-delay: a500ms;
+  animation-delay: 500ms;
 }
+

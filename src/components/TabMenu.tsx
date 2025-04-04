@@ -1,6 +1,5 @@
 
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
 
 interface TabProps {
   label: string;
@@ -13,11 +12,16 @@ const Tab = ({ label, isActive, onClick }: TabProps) => {
     <button
       onClick={onClick}
       className={cn(
-        'py-2 px-4 text-center rounded-t-md transition-all duration-300 font-medium text-sm',
-        isActive ? 'tab-active' : 'tab-inactive'
+        'py-2 px-4 text-sm font-medium transition-all duration-300 relative',
+        isActive 
+          ? 'text-primary' 
+          : 'text-muted-foreground hover:text-foreground'
       )}
     >
       {label}
+      {isActive && (
+        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary animate-fade-in" />
+      )}
     </button>
   );
 };
@@ -31,7 +35,7 @@ interface TabMenuProps {
 
 const TabMenu = ({ tabs, activeTab, onTabChange, className }: TabMenuProps) => {
   return (
-    <div className={cn('flex mb-0', className)}>
+    <div className={cn('flex space-x-1 mb-0 border-b border-border/40 bg-gradient-to-r from-background to-background/80 backdrop-blur-sm', className)}>
       {tabs.map((tab) => (
         <Tab
           key={tab}
