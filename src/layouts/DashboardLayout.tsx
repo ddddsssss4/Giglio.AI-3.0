@@ -2,7 +2,6 @@
 import { ReactNode, useState, useEffect } from 'react';
 import UserHeader from '@/components/UserHeader';
 import Notes from '@/components/Notes';
-import { useMediaQuery } from '@/hooks/use-mobile';
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -20,7 +19,6 @@ const DashboardLayout = ({
   loading = false
 }: DashboardLayoutProps) => {
   const [renderedElements, setRenderedElements] = useState(0);
-  const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1024px)');
   
   useEffect(() => {
     // Increment rendered elements for staggered animation
@@ -47,11 +45,11 @@ const DashboardLayout = ({
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      <div className="container px-2 sm:px-4 py-4 sm:py-8 mx-auto max-w-5xl">
-        <div className="card-gradient rounded-xl p-3 sm:p-6 shadow-lg border border-white/10 animate-fade-in">
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="container px-4 py-8 mx-auto max-w-5xl">
+        <div className="card-gradient rounded-xl p-6 shadow-lg border border-white/10 animate-fade-in">
           {/* User Header with Notes button */}
-          <div className={`flex ${isTablet ? 'flex-col sm:flex-row' : 'flex-row'} justify-between items-start gap-2`}>
+          <div className="flex justify-between items-start">
             <div className="flex-1">
               <UserHeader 
                 userName={userName} 
