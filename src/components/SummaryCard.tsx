@@ -29,9 +29,10 @@ interface SummaryItemProps {
   status?: 'success' | 'warning' | 'danger' | 'info';
   children?: React.ReactNode;
   additionalInfo?: React.ReactNode;
+  icon?: React.ReactNode;
 }
 
-const SummaryItem = ({ title, isExpanded = false, status, children, additionalInfo }: SummaryItemProps) => {
+const SummaryItem = ({ title, isExpanded = false, status, children, additionalInfo, icon }: SummaryItemProps) => {
   const [expanded, setExpanded] = useState(isExpanded);
   
   const getStatusColor = () => {
@@ -45,7 +46,7 @@ const SummaryItem = ({ title, isExpanded = false, status, children, additionalIn
   };
   
   return (
-    <div className="mb-2 bg-card rounded-md overflow-hidden animate-fade-in">
+    <div className="mb-2 bg-card rounded-md overflow-hidden animate-fade-in border border-border/30 shadow-sm hover:shadow-md transition-all duration-300">
       <div 
         className="flex items-center p-3 cursor-pointer hover:bg-accent/10 transition-colors"
         onClick={() => setExpanded(!expanded)}
@@ -56,6 +57,9 @@ const SummaryItem = ({ title, isExpanded = false, status, children, additionalIn
         }
         
         {status && <div className={`w-4 h-4 rounded-full mr-2 ${getStatusColor()}`} />}
+        
+        {icon && <div className="mr-2">{icon}</div>}
+        
         <span className="font-medium">{title}</span>
         
         {additionalInfo && <div className="ml-auto">{additionalInfo}</div>}

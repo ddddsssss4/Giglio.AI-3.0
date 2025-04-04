@@ -35,7 +35,7 @@ interface TabMenuProps {
 
 const TabMenu = ({ tabs, activeTab, onTabChange, className }: TabMenuProps) => {
   return (
-    <div className={cn('flex space-x-1 mb-0 border-b border-border/40 bg-gradient-to-r from-background to-background/80 backdrop-blur-sm', className)}>
+    <div className={cn('flex space-x-1 mb-0 border-b border-border/40 bg-gradient-to-r from-background to-background/80 backdrop-blur-sm sticky top-0 z-10', className)}>
       {tabs.map((tab) => (
         <Tab
           key={tab}
