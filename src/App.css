@@ -76,3 +76,66 @@
   border-radius: 2px;
   transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* iPad responsiveness */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  /* Portrait mode */
+  @media (orientation: portrait) {
+    .data-cell {
+      padding: 0.75rem 0.5rem;
+      font-size: 0.875rem;
+    }
+    
+    .student-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  
+  /* Landscape mode */
+  @media (orientation: landscape) {
+    .student-grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+  }
+}
+
+/* Enhanced table styles */
+table {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.data-row-header th {
+  background: hsl(var(--card));
+  color: hsl(var(--primary));
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.data-row:hover {
+  background-color: hsl(var(--accent)/0.1);
+}
+
+.data-cell {
+  padding: 0.75rem 1rem;
+  vertical-align: middle;
+}
+
+/* Notes icon with notification */
+.has-notes {
+  position: relative;
+}
+
+.has-notes::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  background-color: hsl(var(--primary));
+  border-radius: 50%;
+}
