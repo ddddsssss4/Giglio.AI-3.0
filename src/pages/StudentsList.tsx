@@ -5,12 +5,16 @@ import { LayoutGrid, List, LogOut, Settings, User, GraduationCap, Check, X } fro
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import girlIcon from '/public/Group (1).png';
+import boyIcon from '/public/Group (2).png';
+import teacherIcon from '/public/Group.svg'
 
 // Enhanced student data with performance metrics
 interface StudentData {
   id: number;
   name: string;
   image: string;
+  gender: 'girl' | 'boy';
   status: 'On Track' | 'Off Track';
   corrects: string;
   incorrects: string;
@@ -22,7 +26,8 @@ const students: StudentData[] = [
   { 
     id: 1, 
     name: 'Emily Johnson', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: girlIcon,
+    gender: 'girl',
     status: 'On Track',
     corrects: 'x1.5 Corrects',
     incorrects: '+2.0 Incorrects',
@@ -31,7 +36,8 @@ const students: StudentData[] = [
   { 
     id: 2, 
     name: 'Jacob Smith', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: boyIcon,
+    gender: 'boy',
     status: 'Off Track',
     corrects: '+2.0 Corrects',
     incorrects: 'x1.5 Incorrects',
@@ -40,7 +46,8 @@ const students: StudentData[] = [
   { 
     id: 3, 
     name: 'Olivia Taylor', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: girlIcon,
+    gender: 'girl',
     status: 'On Track',
     corrects: 'x1.5 Corrects',
     incorrects: '+2.0 Incorrects',
@@ -49,7 +56,8 @@ const students: StudentData[] = [
   { 
     id: 4, 
     name: 'Ethan Brown', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: boyIcon,
+    gender: 'boy',
     status: 'On Track',
     corrects: 'x1.5 Corrects',
     incorrects: '+2.0 Incorrects',
@@ -58,7 +66,8 @@ const students: StudentData[] = [
   { 
     id: 5, 
     name: 'Madison Miller', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: girlIcon,
+    gender: 'girl',
     status: 'Off Track',
     corrects: '+2.0 Corrects',
     incorrects: 'x1.5 Incorrects',
@@ -67,7 +76,8 @@ const students: StudentData[] = [
   { 
     id: 6, 
     name: 'Ava Hill', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: girlIcon,
+    gender: 'girl',
     status: 'On Track',
     corrects: 'x1.5 Corrects',
     incorrects: '+2.0 Incorrects',
@@ -76,7 +86,8 @@ const students: StudentData[] = [
   { 
     id: 7, 
     name: 'Noah Wilson', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: boyIcon,
+    gender: 'boy',
     status: 'Off Track',
     corrects: '+2.0 Corrects',
     incorrects: 'x1.5 Incorrects',
@@ -85,7 +96,8 @@ const students: StudentData[] = [
   { 
     id: 8, 
     name: 'Sophia Martinez', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: girlIcon,
+    gender: 'girl',
     status: 'On Track',
     corrects: 'x1.5 Corrects',
     incorrects: '+2.0 Incorrects',
@@ -94,7 +106,8 @@ const students: StudentData[] = [
   { 
     id: 9, 
     name: 'Liam Anderson', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: boyIcon,
+    gender: 'boy',
     status: 'On Track',
     corrects: 'x1.5 Corrects',
     incorrects: '+2.0 Incorrects',
@@ -103,7 +116,8 @@ const students: StudentData[] = [
   { 
     id: 10, 
     name: 'Isabella Thomas', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: girlIcon,
+    gender: 'girl',
     status: 'Off Track',
     corrects: '+2.0 Corrects',
     incorrects: 'x1.5 Incorrects',
@@ -112,7 +126,8 @@ const students: StudentData[] = [
   { 
     id: 11, 
     name: 'Mason White', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: boyIcon,
+    gender: 'boy',
     status: 'On Track',
     corrects: 'x1.5 Corrects',
     incorrects: '+2.0 Incorrects',
@@ -121,7 +136,8 @@ const students: StudentData[] = [
   { 
     id: 12, 
     name: 'Charlotte Harris', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: girlIcon,
+    gender: 'girl',
     status: 'Off Track',
     corrects: '+2.0 Corrects',
     incorrects: 'x1.5 Incorrects',
@@ -130,7 +146,8 @@ const students: StudentData[] = [
   { 
     id: 13, 
     name: 'James Lewis', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: boyIcon,
+    gender: 'boy',
     status: 'On Track',
     corrects: 'x1.5 Corrects',
     incorrects: '+2.0 Incorrects',
@@ -139,7 +156,8 @@ const students: StudentData[] = [
   { 
     id: 14, 
     name: 'Amelia Walker', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: girlIcon,
+    gender: 'girl',
     status: 'Off Track',
     corrects: '+2.0 Corrects',
     incorrects: 'x1.5 Incorrects',
@@ -148,7 +166,8 @@ const students: StudentData[] = [
   { 
     id: 15, 
     name: 'Benjamin Scott', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: boyIcon,
+    gender: 'boy',
     status: 'On Track',
     corrects: 'x1.5 Corrects',
     incorrects: '+2.0 Incorrects',
@@ -157,7 +176,8 @@ const students: StudentData[] = [
   { 
     id: 16, 
     name: 'Harper Green', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: girlIcon,
+    gender: 'girl',
     status: 'Off Track',
     corrects: '+2.0 Corrects',
     incorrects: 'x1.5 Incorrects',
@@ -166,7 +186,8 @@ const students: StudentData[] = [
   { 
     id: 17, 
     name: 'Elijah Baker', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: boyIcon,
+    gender: 'boy',
     status: 'On Track',
     corrects: 'x1.5 Corrects',
     incorrects: '+2.0 Incorrects',
@@ -175,7 +196,8 @@ const students: StudentData[] = [
   { 
     id: 18, 
     name: 'Evelyn Adams', 
-    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    image: girlIcon,
+    gender: 'girl',
     status: 'Off Track',
     corrects: '+2.0 Corrects',
     incorrects: 'x1.5 Incorrects',
@@ -186,7 +208,7 @@ const students: StudentData[] = [
 // Teacher data
 const teacher = {
   name: 'Mike Davis',
-  image: '/lovable-uploads/1fa85128-3b99-4807-8395-4a5e40033726.png'
+  image: teacherIcon
 };
 
 const StudentsList = () => {
@@ -282,7 +304,7 @@ const StudentsList = () => {
               {/* Teacher avatar */}
               <div className="flex items-center gap-2">
                 <span className="font-medium">{teacher.name}</span>
-                <Avatar className="h-10 w-10 border-2 border-app-blue">
+                <Avatar className="h-8 w-8 border-2 border-app-blue">
                   <AvatarImage src={teacher.image} alt={teacher.name} />
                   <AvatarFallback>{teacher.name.charAt(0)}</AvatarFallback>
                 </Avatar>
