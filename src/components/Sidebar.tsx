@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { User, Settings, GraduationCap, PanelLeft, PanelRight } from 'lucide-react';
+import { User, Settings, GraduationCap, PanelLeft, PanelRight, LogOut } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { 
   Sidebar,
@@ -12,12 +12,18 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from '@/components/ui/sidebar';
+import { toast } from "sonner";
 
 export function AppSidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
+  };
+  
+  const handleLogout = () => {
+    toast.success("Logged out successfully");
+    // In a real app, you would handle actual logout logic here
   };
   
   return (
@@ -84,9 +90,23 @@ export function AppSidebar() {
       </SidebarContent>
       
       <SidebarFooter className="p-4 border-t border-border">
-        <div className={`flex ${isCollapsed ? 'justify-center' : 'justify-between'} items-center`}>
-          {!isCollapsed && <span className="text-sm text-muted-foreground">Theme</span>}
-          <ThemeToggle />
+        <div className="flex flex-col gap-4">
+          <div className={`flex ${isCollapsed ? 'justify-center' : 'justify-between'} items-center`}>
+            {!isCollapsed && <span className="text-sm text-muted-foreground">Theme</span>}
+            <ThemeToggle />
+          </div>
+          
+          <SidebarMenuButton 
+            asChild 
+            tooltip="Logout"
+            className="mt-2 w-full flex items-center gap-3 px-3 py-2 rounded-lg text-destructive hover:bg-destructive/10"
+            onClick={handleLogout}
+          >
+            <button>
+              <LogOut size={20} />
+              <span className={isCollapsed ? 'hidden' : 'block'}>Logout</span>
+            </button>
+          </SidebarMenuButton>
         </div>
       </SidebarFooter>
     </Sidebar>
