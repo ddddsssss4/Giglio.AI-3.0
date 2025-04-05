@@ -1,7 +1,10 @@
 
-import { File } from 'lucide-react';
+import { StickyNote } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 interface ErrorData {
   date: string;
@@ -12,6 +15,7 @@ interface ErrorData {
   insertion?: string;
   substitution?: string;
   reversal?: string;
+  notes?: string;
 }
 
 interface DataTableProps {
@@ -21,6 +25,19 @@ interface DataTableProps {
 
 export const DataTable = ({ data, className }: DataTableProps) => {
   const [rows, setRows] = useState<ErrorData[]>(data);
+  const [activeNote, setActiveNote] = useState<string>("");
+  const [rowIndex, setRowIndex] = useState<number | null>(null);
+  
+  const handleSaveNote = () => {
+    if (rowIndex !== null) {
+      const updatedRows = [...rows];
+      updatedRows[rowIndex] = {
+        ...updatedRows[rowIndex],
+        notes: activeNote
+      };
+      setRows(updatedRows);
+    }
+  };
   
   return (
     <div className={cn('w-full overflow-auto rounded-md', className)}>
@@ -35,7 +52,7 @@ export const DataTable = ({ data, className }: DataTableProps) => {
             <th className="data-cell text-left">Insertion</th>
             <th className="data-cell text-left">Substitution</th>
             <th className="data-cell text-left">Reversal</th>
-            <th className="data-cell text-center w-10">Edit</th>
+            <th className="data-cell text-center w-10">Notes</th>
           </tr>
         </thead>
         <tbody>
@@ -58,9 +75,33 @@ export const DataTable = ({ data, className }: DataTableProps) => {
               <td className="data-cell">{row.substitution || "-"}</td>
               <td className="data-cell">{row.reversal || "-"}</td>
               <td className="data-cell text-center">
-                <button className="text-app-blue hover:text-app-dark-blue transition-colors">
-                  <File size={18} />
-                </button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <button 
+                      className="text-app-blue hover:text-app-dark-blue transition-colors"
+                      onClick={() => {
+                        setActiveNote(row.notes || "");
+                        setRowIndex(index);
+                      }}
+                    >
+                      <StickyNote size={18} />
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Notes for {row.passage} - {row.attempt}</DialogTitle>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                      <Textarea 
+                        placeholder="Add notes about this error..." 
+                        value={activeNote}
+                        onChange={(e) => setActiveNote(e.target.value)}
+                        className="min-h-[150px]"
+                      />
+                      <Button type="submit" onClick={handleSaveNote}>Save Note</Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </td>
             </tr>
           ))}

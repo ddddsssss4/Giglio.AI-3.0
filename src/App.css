@@ -76,3 +76,16 @@
   border-radius: 2px;
   transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Student list responsive layouts */
+@media (orientation: portrait) and (max-width: 1024px) {
+  .student-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (orientation: landscape) and (max-width: 1024px) {
+  .student-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
