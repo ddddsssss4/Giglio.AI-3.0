@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { LayoutGrid, List, LogOut, Settings, User, GraduationCap, Check, X } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useMediaQuery } from '@/hooks/use-media-query';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 // Enhanced student data with performance metrics
 interface StudentData {
@@ -211,7 +212,7 @@ const StudentsList = () => {
   return (
     <div className="flex h-screen bg-background">
       {/* Sidebar */}
-      <aside className="w-[330px] bg-slate-100 border-r border-border flex flex-col">
+      <aside className="w-[330px] bg-sidebar border-r border-border flex flex-col">
         <div className="p-6">
           <h1 className="text-2xl font-bold">GIGLIO.AI<span className="text-app-blue">Dashboard</span></h1>
         </div>
@@ -219,7 +220,7 @@ const StudentsList = () => {
         <nav className="flex-1 px-3 py-6 space-y-2">
           <a 
             href="#" 
-            className="flex items-center gap-3 px-4 py-3 rounded-full text-gray-700 hover:bg-slate-200 transition-colors"
+            className="flex items-center gap-3 px-4 py-3 rounded-full text-foreground hover:bg-secondary transition-colors"
           >
             <User size={24} />
             <span className="font-medium">Profile</span>
@@ -235,16 +236,20 @@ const StudentsList = () => {
           
           <a 
             href="#" 
-            className="flex items-center gap-3 px-4 py-3 rounded-full text-gray-700 hover:bg-slate-200 transition-colors"
+            className="flex items-center gap-3 px-4 py-3 rounded-full text-foreground hover:bg-secondary transition-colors"
           >
             <Settings size={24} />
             <span className="font-medium">Settings</span>
           </a>
         </nav>
         
-        {/* Logout button */}
-        <div className="p-4 mt-auto">
-          <button className="flex items-center gap-2 px-6 py-3 w-full text-red-500 hover:bg-red-50 rounded-full transition-colors">
+        {/* Theme toggle and logout */}
+        <div className="p-4 border-t border-border">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-sm font-medium">Theme</span>
+            <ThemeToggle />
+          </div>
+          <button className="flex items-center gap-2 px-6 py-3 w-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors">
             <LogOut size={20} />
             <span className="font-medium">Logout</span>
           </button>
@@ -261,13 +266,13 @@ const StudentsList = () => {
               {/* View toggle */}
               <div className="flex items-center border rounded-lg overflow-hidden">
                 <button 
-                  className={`p-2 ${viewMode === 'grid' ? 'bg-primary text-white' : 'bg-white'}`}
+                  className={`p-2 ${viewMode === 'grid' ? 'bg-primary text-white' : 'bg-background text-foreground'}`}
                   onClick={() => setViewMode('grid')}
                 >
                   <LayoutGrid size={20} />
                 </button>
                 <button 
-                  className={`p-2 ${viewMode === 'list' ? 'bg-primary text-white' : 'bg-white'}`}
+                  className={`p-2 ${viewMode === 'list' ? 'bg-primary text-white' : 'bg-background text-foreground'}`}
                   onClick={() => setViewMode('list')}
                 >
                   <List size={20} />
@@ -310,7 +315,7 @@ const StudentsList = () => {
               {students.map(student => (
                 <div 
                   key={student.id} 
-                  className="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-slate-50 transition-all"
+                  className="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-secondary/50 transition-all"
                   onClick={() => handleStudentClick(student.id)}
                 >
                   <div className="flex items-center w-full">
@@ -325,31 +330,31 @@ const StudentsList = () => {
                       </div>
                       
                       <div className="flex items-center">
-                        <div className={`mr-2 rounded-full p-1 ${student.status === 'On Track' ? 'bg-green-100' : 'bg-red-100'}`}>
+                        <div className={`mr-2 rounded-full p-1 ${student.status === 'On Track' ? 'bg-green-100 dark:bg-green-900/30' : 'bg-red-100 dark:bg-red-900/30'}`}>
                           {student.status === 'On Track' ? 
-                            <Check size={16} className="text-green-600" /> : 
-                            <X size={16} className="text-red-600" />
+                            <Check size={16} className="text-green-600 dark:text-green-400" /> : 
+                            <X size={16} className="text-red-600 dark:text-red-400" />
                           }
                         </div>
-                        <span className={`${student.status === 'On Track' ? 'text-green-600' : 'text-red-600'} font-medium`}>
+                        <span className={`${student.status === 'On Track' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'} font-medium`}>
                           {student.status}
                         </span>
                       </div>
                       
                       <div className="text-center">
-                        <span className={`font-medium ${student.corrects.startsWith('+') ? 'text-green-600' : 'text-blue-600'}`}>
+                        <span className={`font-medium ${student.corrects.startsWith('+') ? 'text-green-600 dark:text-green-400' : 'text-blue-600 dark:text-blue-400'}`}>
                           {student.corrects}
                         </span>
                       </div>
                       
                       <div className="text-center">
-                        <span className={`font-medium ${student.incorrects.startsWith('+') ? 'text-red-600' : 'text-blue-600'}`}>
+                        <span className={`font-medium ${student.incorrects.startsWith('+') ? 'text-red-600 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'}`}>
                           {student.incorrects}
                         </span>
                       </div>
                       
                       <div className="text-center">
-                        <span className={`font-medium ${student.improvement.startsWith('+') ? 'text-green-600' : 'text-blue-600'}`}>
+                        <span className={`font-medium ${student.improvement.startsWith('+') ? 'text-green-600 dark:text-green-400' : 'text-blue-600 dark:text-blue-400'}`}>
                           {student.improvement}
                         </span>
                       </div>
