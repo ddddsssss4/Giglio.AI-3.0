@@ -9,11 +9,7 @@ export function Layout() {
   const navigate = useNavigate();
   
   // Redirect from / to /students/1 (first student) if on the root path
-  useEffect(() => {
-    if (location.pathname === '/') {
-      navigate('/students/1');
-    }
-  }, [location.pathname, navigate]);
+
   
   return (
     <SidebarProvider>
