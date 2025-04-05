@@ -1,30 +1,185 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LayoutGrid, List, LogOut, Settings, User, GraduationCap } from 'lucide-react';
+import { LayoutGrid, List, LogOut, Settings, User, GraduationCap, Check, X } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useMediaQuery } from '@/hooks/use-mobile';
+import { useMediaQuery } from '@/hooks/use-media-query';
 
-// Mock student data
-const students = [
-  { id: 1, name: 'Jacob Smith', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 2, name: 'Carter Moore', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 3, name: 'Ethan Brown', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 4, name: 'Priya Patel', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 5, name: 'Liam Devis', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 6, name: 'Ava Hill', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 7, name: 'Jacob Smith', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 8, name: 'Carter Moore', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 9, name: 'Ethan Brown', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 10, name: 'Priya Patel', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 11, name: 'Liam Devis', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 12, name: 'Ava Hill', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 13, name: 'Jacob Smith', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 14, name: 'Carter Moore', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 15, name: 'Ethan Brown', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 16, name: 'Priya Patel', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 17, name: 'Liam Devis', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
-  { id: 18, name: 'Ava Hill', image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png' },
+// Enhanced student data with performance metrics
+interface StudentData {
+  id: number;
+  name: string;
+  image: string;
+  status: 'On Track' | 'Off Track';
+  corrects: string;
+  incorrects: string;
+  improvement: string;
+}
+
+// Mock student data with unique details
+const students: StudentData[] = [
+  { 
+    id: 1, 
+    name: 'Emily Johnson', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'On Track',
+    corrects: 'x1.5 Corrects',
+    incorrects: '+2.0 Incorrects',
+    improvement: 'x1.8 Improvement Index'
+  },
+  { 
+    id: 2, 
+    name: 'Jacob Smith', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'Off Track',
+    corrects: '+2.0 Corrects',
+    incorrects: 'x1.5 Incorrects',
+    improvement: '+1.8 Improvement Index'
+  },
+  { 
+    id: 3, 
+    name: 'Olivia Taylor', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'On Track',
+    corrects: 'x1.5 Corrects',
+    incorrects: '+2.0 Incorrects',
+    improvement: 'x1.8 Improvement Index'
+  },
+  { 
+    id: 4, 
+    name: 'Ethan Brown', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'On Track',
+    corrects: 'x1.5 Corrects',
+    incorrects: '+2.0 Incorrects',
+    improvement: 'x1.8 Improvement Index'
+  },
+  { 
+    id: 5, 
+    name: 'Madison Miller', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'Off Track',
+    corrects: '+2.0 Corrects',
+    incorrects: 'x1.5 Incorrects',
+    improvement: '+1.8 Improvement Index'
+  },
+  { 
+    id: 6, 
+    name: 'Ava Hill', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'On Track',
+    corrects: 'x1.5 Corrects',
+    incorrects: '+2.0 Incorrects',
+    improvement: 'x1.8 Improvement Index'
+  },
+  { 
+    id: 7, 
+    name: 'Noah Wilson', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'Off Track',
+    corrects: '+2.0 Corrects',
+    incorrects: 'x1.5 Incorrects',
+    improvement: '+1.8 Improvement Index'
+  },
+  { 
+    id: 8, 
+    name: 'Sophia Martinez', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'On Track',
+    corrects: 'x1.5 Corrects',
+    incorrects: '+2.0 Incorrects',
+    improvement: 'x1.8 Improvement Index'
+  },
+  { 
+    id: 9, 
+    name: 'Liam Anderson', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'On Track',
+    corrects: 'x1.5 Corrects',
+    incorrects: '+2.0 Incorrects',
+    improvement: 'x1.8 Improvement Index'
+  },
+  { 
+    id: 10, 
+    name: 'Isabella Thomas', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'Off Track',
+    corrects: '+2.0 Corrects',
+    incorrects: 'x1.5 Incorrects',
+    improvement: '+1.8 Improvement Index'
+  },
+  { 
+    id: 11, 
+    name: 'Mason White', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'On Track',
+    corrects: 'x1.5 Corrects',
+    incorrects: '+2.0 Incorrects',
+    improvement: 'x1.8 Improvement Index'
+  },
+  { 
+    id: 12, 
+    name: 'Charlotte Harris', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'Off Track',
+    corrects: '+2.0 Corrects',
+    incorrects: 'x1.5 Incorrects',
+    improvement: '+1.8 Improvement Index'
+  },
+  { 
+    id: 13, 
+    name: 'James Lewis', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'On Track',
+    corrects: 'x1.5 Corrects',
+    incorrects: '+2.0 Incorrects',
+    improvement: 'x1.8 Improvement Index'
+  },
+  { 
+    id: 14, 
+    name: 'Amelia Walker', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'Off Track',
+    corrects: '+2.0 Corrects',
+    incorrects: 'x1.5 Incorrects',
+    improvement: '+1.8 Improvement Index'
+  },
+  { 
+    id: 15, 
+    name: 'Benjamin Scott', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'On Track',
+    corrects: 'x1.5 Corrects',
+    incorrects: '+2.0 Incorrects',
+    improvement: 'x1.8 Improvement Index'
+  },
+  { 
+    id: 16, 
+    name: 'Harper Green', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'Off Track',
+    corrects: '+2.0 Corrects',
+    incorrects: 'x1.5 Incorrects',
+    improvement: '+1.8 Improvement Index'
+  },
+  { 
+    id: 17, 
+    name: 'Elijah Baker', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'On Track',
+    corrects: 'x1.5 Corrects',
+    incorrects: '+2.0 Incorrects',
+    improvement: 'x1.8 Improvement Index'
+  },
+  { 
+    id: 18, 
+    name: 'Evelyn Adams', 
+    image: '/lovable-uploads/c8576e8c-d20f-4218-a43f-8d787c7f417e.png',
+    status: 'Off Track',
+    corrects: '+2.0 Corrects',
+    incorrects: 'x1.5 Incorrects',
+    improvement: '+1.8 Improvement Index'
+  },
 ];
 
 // Teacher data
@@ -48,8 +203,9 @@ const StudentsList = () => {
   };
   
   const handleStudentClick = (studentId: number) => {
-    // Navigate to student details page (current Dashboard)
-    navigate('/');
+    // Navigate to student details page with the student ID
+    // This will allow the Index page to display data for the specific student
+    navigate(`/?studentId=${studentId}`);
   };
   
   return (
@@ -148,20 +304,57 @@ const StudentsList = () => {
             </div>
           )}
           
-          {/* Students list */}
+          {/* Students list with detailed info */}
           {viewMode === 'list' && (
             <div className="space-y-3">
               {students.map(student => (
                 <div 
                   key={student.id} 
-                  className="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-slate-50"
+                  className="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-slate-50 transition-all"
                   onClick={() => handleStudentClick(student.id)}
                 >
-                  <Avatar className="h-12 w-12 mr-4">
-                    <AvatarImage src={student.image} alt={student.name} />
-                    <AvatarFallback>{student.name.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                  <span className="font-medium">{student.name}</span>
+                  <div className="flex items-center w-full">
+                    <Avatar className="h-16 w-16 mr-4">
+                      <AvatarImage src={student.image} alt={student.name} />
+                      <AvatarFallback>{student.name.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    
+                    <div className="flex-1 grid grid-cols-5 gap-4">
+                      <div className="flex flex-col">
+                        <span className="font-medium text-lg">{student.name}</span>
+                      </div>
+                      
+                      <div className="flex items-center">
+                        <div className={`mr-2 rounded-full p-1 ${student.status === 'On Track' ? 'bg-green-100' : 'bg-red-100'}`}>
+                          {student.status === 'On Track' ? 
+                            <Check size={16} className="text-green-600" /> : 
+                            <X size={16} className="text-red-600" />
+                          }
+                        </div>
+                        <span className={`${student.status === 'On Track' ? 'text-green-600' : 'text-red-600'} font-medium`}>
+                          {student.status}
+                        </span>
+                      </div>
+                      
+                      <div className="text-center">
+                        <span className={`font-medium ${student.corrects.startsWith('+') ? 'text-green-600' : 'text-blue-600'}`}>
+                          {student.corrects}
+                        </span>
+                      </div>
+                      
+                      <div className="text-center">
+                        <span className={`font-medium ${student.incorrects.startsWith('+') ? 'text-red-600' : 'text-blue-600'}`}>
+                          {student.incorrects}
+                        </span>
+                      </div>
+                      
+                      <div className="text-center">
+                        <span className={`font-medium ${student.improvement.startsWith('+') ? 'text-green-600' : 'text-blue-600'}`}>
+                          {student.improvement}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
